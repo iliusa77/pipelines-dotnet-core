@@ -15,8 +15,8 @@ variables:
 steps:
 - task: UseDotNet@2
   inputs:
-    version: '3.0.x'
-    packageType: runtime
+    version: '5.0.x'
+    includePreviewVersions: true # Required for preview versions
     
 - task: DotNetCoreCLI@2
   displayName: Build
