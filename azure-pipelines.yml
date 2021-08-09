@@ -45,3 +45,17 @@ steps:
   inputs:
     testRunner: VSTest
     testResultsFiles: '**/*.trx'
+
+- task: DotNetCoreCLI@2
+  displayName: 'Dotnet test'
+  inputs:
+    command: 'test'
+    arguments: '--configuration $(buildConfiguration) --collect:"XPlat Code Coverage" -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Format=cobertura'
+    publishTestResults: true
+    projects: '**/test-library/*.csproj' # update with your test project directory
+
+- task: PublishCodeCoverageResults@1
+  displayName: 'Publish code coverage report'
+  inputs:
+    codeCoverageTool: 'Cobertura'
+    summaryFileLocation: '$(Build.SourcesDirectory)/**/coverage.cobertura.xml'
